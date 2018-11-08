@@ -1,0 +1,133 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vuejs task</title>
+
+
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/foundation/6.2.4/foundation.min.css'>
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'>
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Nunito'>
+    <!--<link rel="stylesheet" href="css/style.css">-->
+    
+    <link rel="stylesheet" href="css/style.css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+   
+    <style>
+        body.main_container {
+            max-width: 1120px;
+            margin: 0 auto;
+           
+        }
+        .main-area {
+            height: 75px;
+            width: 100%;
+            display: block;
+            float: left;
+        }
+
+        #sidebar {
+            min-width: 250px;
+        }
+     
+        #barHop {
+            width: 100%;
+            padding-right: 10px;
+            margin-top: 20px;
+        }
+
+        #barHopHolder {
+            width: 100%;
+        }
+
+        section.tasks {
+            /*margin-top: -300px;*/
+        }
+
+     
+        #loc {
+            margin-top: -900px;
+        }
+    
+    </style>
+</head>
+<body>
+
+    <div id="app">
+       
+        <div class="row" style="max-width: 100%;">
+            <div class="col-lg-3 col-md-3">
+                <header class="site-header">
+                    <br>
+                   
+                    <div class="clean">
+
+                        <div class="centered">
+                            <h5>Day 1 <strong>complete</strong> ✅ </h5>
+                        </div>
+
+                    </div>
+
+                </header>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div>
+                    <task-list v-for="(tasks_list, index) in tasks"
+                        :tasks="tasks_list"
+                        :key="index"></task-list>
+                </div>
+            </div>
+         
+        </div>
+    </div>
+    <template id="task-list">
+        <section class="tasks">
+            <h1>
+                <br> <small>{{tasks.heading}}</small>
+                <transition name="fade">
+                    <small v-if="incomplete">({{ incomplete }})</small>
+                </transition>
+
+            </h1>
+            <strong>Please click each tasks as you complete. </strong>
+            <div class="tasks__new input-group">
+
+            </div>
+            <div class="tasks__clear button-group pull-right">
+            </div>
+
+            <transition-group name="fade" tag="ul" class="tasks__list no-bullet">
+                <task-item v-for="(task, index) in tasks.content"
+                           @remove="removeTask(index)"
+                           @complete="completeTask(task)"
+                           @info="showTaskInfo(task)"
+                           :task="task"
+                           :key="task"></task-item>
+            </transition-group>
+        </section>
+
+    </template>
+
+    <template id="task-item">
+        <li class="tasks__item">
+            <button :class="className" style="max-width:94%;"
+                    @click.self="$emit('complete')">
+                {{ task.title }}
+            </button>
+            <i class="fa fa-info-circle"
+               style="font-size:20px; padding-top:20px; cursor:pointer;"
+               aria-hidden="true"
+               @click.self="$emit('info')">
+            </i>
+        </li>
+    </template>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.3/vue.js'></script>
+
+ 
+    <script src="index2.js"></script>
+
+</body>
+</html>
+
